@@ -8,7 +8,10 @@ import { togglePostLikeStatus } from "@/actions/posts";
 import Image from "next/image";
 
 function imageLoader(config) {
-  return config.src;
+  const urlStart = config.src.split("upload/")[0];
+  const urlEnd = config.src.split("upload/")[1];
+  const transformations = `w_200,q_${config.quality}`;
+  return `${urlStart}upload/${transformations}/${urlEnd}`;
 }
 
 function Post({ post, action }) {
@@ -18,7 +21,8 @@ function Post({ post, action }) {
         <Image
           loader={imageLoader}
           src={post.image}
-          fill
+          width={200}
+          height={120}
           alt={post.title}
           quality={50}
         />
